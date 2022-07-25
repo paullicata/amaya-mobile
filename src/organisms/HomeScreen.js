@@ -1,10 +1,12 @@
 import React from "react";
 import { Text, View } from "react-native";
+import LogInForm from "../molecules/LogInForm";
+import SignUpForm from "../molecules/SignUpForm";
 
 const HomeScreen = () => {
   return (
-    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-      <Text>Home!</Text>
+    <View>
+      <LogInForm />
     </View>
   );
 };
