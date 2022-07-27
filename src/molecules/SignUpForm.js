@@ -1,11 +1,34 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Button,
+} from "react-native";
 
 const SignUpForm = () => {
   const [username, onChangeUsername] = useState();
   const [email, onChangeEmail] = useState();
   const [password, onChangePassword] = useState();
   const [passwordConfirmation, onChangePasswordConfirmation] = useState();
+
+  sendRegistration = () => {
+    axios
+      .post("/users", {
+        email: email,
+        username: username,
+        password: password,
+        password_confirmation: passwordConfirmation,
+      })
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+  };
 
   return (
     <View>
@@ -34,6 +57,7 @@ const SignUpForm = () => {
         onChangeText={onChangePasswordConfirmation}
         value={passwordConfirmation}
       />
+      <Button title="Register" />
     </View>
   );
 };
