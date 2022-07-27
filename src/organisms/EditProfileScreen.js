@@ -1,10 +1,11 @@
 import React from "react";
 import { Text, View } from "react-native";
+import EditProfileForm from "../molecules/EditProfileForm";
 
 const EditProfileScreen = () => {
   return (
     <View>
-      <Text>Go to Profile!</Text>
+      <EditProfileForm />
     </View>
   );
 };

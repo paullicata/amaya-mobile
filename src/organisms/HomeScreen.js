@@ -6,7 +6,7 @@ import SignUpForm from "../molecules/SignUpForm";
 const HomeScreen = () => {
   return (
     <View>
-      <LogInForm />
+      <SignUpForm />
     </View>
   );
 };
