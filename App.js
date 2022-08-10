@@ -12,11 +12,21 @@ import {
   useRecoilState,
   useRecoilValue,
 } from "recoil";
+import { useFonts, Inter_900Black } from "@expo-google-fonts/inter";
+import AppLoading from "expo-app-loading";
 import Ionicons from "react-native-vector-icons/Ionicons";
 
 const Tab = createBottomTabNavigator();
 
 export default function App() {
+  let [fontsLoaded] = useFonts({
+    Inter_900Black,
+  });
+
+  // if (!fontsLoaded) {
+  //   return <Text>Heyyyy</Text>;
+  // }
+
   return (
     <RecoilRoot>
       <NavigationContainer>
