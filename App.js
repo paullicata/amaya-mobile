@@ -17,11 +17,13 @@ import { useEffect, useState } from "react";
 import * as SecureStore from "expo-secure-store";
 import { tokenState } from "./src/atoms/tokenState";
 import { userState } from "./src/atoms/userState";
+import SplashScreen from "./src/organisms/SplashScreen";
 
 const Tab = createBottomTabNavigator();
 
 function App() {
   const [jwt, setJwt] = useRecoilState(tokenState);
+  const [isLoading, setIsLoading] = useState(true);
 
   async function save(key, value) {
     await SecureStore.setItemAsync(key, value);
@@ -34,17 +36,26 @@ function App() {
   }
 
   async function getValueFor(key) {
-    let result = await SecureStore.getItemAsync(key);
-    if (result) {
-      setJwt(result);
-    } else {
-      alert("No values stored under that key.");
+    try {
+      let result = await SecureStore.getItemAsync(key);
+      if (result) {
+        setJwt(result);
+      }
+      // await new Promise((resolve) => setTimeout(resolve, 2000));
+    } catch (e) {
+      console.warn(e);
+    } finally {
+      setIsLoading(false);
     }
   }
 
   useEffect(() => {
     getValueFor("jwt");
   }, []);
+
+  if (isLoading) {
+    return <SplashScreen />;
+  }
 
   if (!jwt) {
     return <AuthScreen setJwt={setJwt} />;
