@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
+import axios from "axios";
 import {
   Text,
   TextInput,
@@ -7,28 +8,37 @@ import {
   StyleSheet,
   Button,
 } from "react-native";
+import deviceStorage from "../services/deviceSorage";
 
-const SignUpForm = () => {
+const SignUpForm = (props) => {
   const [username, onChangeUsername] = useState();
   const [email, onChangeEmail] = useState();
   const [password, onChangePassword] = useState();
   const [passwordConfirmation, onChangePasswordConfirmation] = useState();
+  const [registrationError, setRegistrationError] = useState();
 
-  sendRegistration = () => {
+  const sendRegistration = useCallback(() => {
+    setRegistrationError("");
     axios
-      .post("/users", {
-        email: email,
-        username: username,
-        password: password,
-        password_confirmation: passwordConfirmation,
+      .post("http://localhost:3000/users", {
+        user: {
+          email: "hehdde@gmail.com",
+          username: "asdgsdsasf",
+          password: "asdfasdf",
+          password_confirmation: "asdfasdf",
+        },
       })
-      .then(function (response) {
-        console.log(response);
+      .then((response) => {
+        let jwt = response.data;
+        deviceStorage.save("key", jwt);
+        deviceStorage.getValueFor("key");
+        props.setJwt(jwt);
       })
-      .catch(function (error) {
+      .catch((error) => {
         console.log(error);
+        setRegistrationError("Registration failed.");
       });
-  };
+  }, [username, email, password, passwordConfirmation]);
 
   return (
     <View>
@@ -57,7 +67,9 @@ const SignUpForm = () => {
         onChangeText={onChangePasswordConfirmation}
         value={passwordConfirmation}
       />
-      <Button title="Register" />
+      <Button title="Register" onPress={sendRegistration} />
+      <Button onPress={props.authSwitch} title="Already have an account?" />
+      <Text style={styles.errors}>{registrationError}</Text>
     </View>
   );
 };
@@ -72,6 +84,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  errors: {
+    textAlign: "center",
+    color: "red",
   },
 });
 

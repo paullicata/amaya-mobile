@@ -5,11 +5,18 @@ import ProfileScreen from "./ProfileScreen";
 
 const ProfileStack = createNativeStackNavigator();
 
-const ProfileStackScreen = () => {
+const ProfileStackScreen = (parentProps) => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="Profile" component={ProfileScreen} />
-      <ProfileStack.Screen name="EditProfile" component={EditProfileScreen} />
+      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
+      <ProfileStack.Screen name="EditProfile">
+        {(props) => (
+          <EditProfileScreen
+            {...props}
+            deleteValueFor={parentProps.deleteValueFor}
+          />
+        )}
+      </ProfileStack.Screen>
     </ProfileStack.Navigator>
   );
 };

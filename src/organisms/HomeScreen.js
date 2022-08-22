@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   //   padding,
   // },
   item: {
-    backgroundColor: "floralwhite",
+    backgroundColor: "white",
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
@@ -112,8 +112,7 @@ const styles = StyleSheet.create({
     paddingLeft: 15,
   },
   title: {
-    fontSize: 32,
-    fontFamily: "Inter_900Black",
+    fontSize: 28,
     fontWeight: "500",
   },
   author: {
@@ -128,7 +127,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
   },
   body: {
-    fontSize: "20",
+    fontSize: 20,
     fontWeight: "300",
   },
 });

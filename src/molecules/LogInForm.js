@@ -1,10 +1,39 @@
 import axios from "axios";
-import React, { useState } from "react";
-import { Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
+import React, { useCallback, useEffect, useState } from "react";
+import {
+  Text,
+  TextInput,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Button,
+} from "react-native";
+import deviceStorage from "../services/deviceSorage";
 
-const LogInForm = () => {
+const LogInForm = (props) => {
   const [email, onChangeEmail] = useState();
   const [password, onChangePassword] = useState();
+  const [logInError, setLogInError] = useState();
+
+  const sendLoginInfo = useCallback(() => {
+    setLogInError("");
+    axios
+      .post(`http://localhost:3000/users/sign_in`, {
+        user: {
+          email: "plicata18@gmail.com",
+          password: "asdfasdf",
+        },
+      })
+      .then((response) => {
+        let jwt = response.data;
+        deviceStorage.save("jwt", jwt);
+        props.setJwt(jwt);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLogInError("Email or password is invalid.");
+      });
+  }, [email, password]);
 
   return (
     <View>
@@ -21,6 +50,9 @@ const LogInForm = () => {
         onChangeText={onChangePassword}
         value={password}
       />
+      <Button onPress={sendLoginInfo} title="Login" />
+      <Button onPress={props.authSwitch} title="Don't have an account?" />
+      <Text style={styles.errors}>{logInError}</Text>
     </View>
   );
 };
@@ -35,6 +67,10 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  errors: {
+    textAlign: "center",
+    color: "red",
   },
 });
 

@@ -4,12 +4,8 @@ import SearchScreen from "./SearchScreen";
 
 const SearchStack = createNativeStackNavigator();
 
-const SearchStackScreen = () => {
-  return (
-    <SearchStack.Navigator>
-      <SearchStack.Screen name="Search" component={SearchScreen} />
-    </SearchStack.Navigator>
-  );
-};
+function SearchStackScreen(parentProps) {
+  return <SearchStack.Navigator></SearchStack.Navigator>;
+}
 
 export default SearchStackScreen;

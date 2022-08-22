@@ -9,11 +9,11 @@ const HomeStackScreen = () => {
     <HomeStack.Navigator
       screenOptions={({ route }) => ({
         headerStyle: {
-          backgroundColor: "orange",
+          backgroundColor: "white",
         },
       })}
     >
-      <HomeStack.Screen name="Home" component={HomeScreen} />
+      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
     </HomeStack.Navigator>
   );
 };

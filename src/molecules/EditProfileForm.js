@@ -1,11 +1,22 @@
 import React, { useState } from "react";
-import { Text, TextInput, View, SafeAreaView, StyleSheet } from "react-native";
+import {
+  Text,
+  TextInput,
+  View,
+  SafeAreaView,
+  StyleSheet,
+  Button,
+} from "react-native";
 
-const EditProfileForm = () => {
+const EditProfileForm = (props) => {
   const [firstName, onChangeFirstName] = useState();
   const [lastName, onChangeLastName] = useState();
   const [username, onChangeUsername] = useState();
   const [email, onChangeEmail] = useState();
+
+  const logOut = () => {
+    props.deleteValueFor("jwt");
+  };
 
   return (
     <View>
@@ -35,6 +46,7 @@ const EditProfileForm = () => {
         onChangeText={onChangeEmail}
         value={email}
       />
+      <Button title="Log Out" onPress={logOut} />
     </View>
   );
 };
