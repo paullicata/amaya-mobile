@@ -1,4 +1,5 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect } from "react";
 import {
   Button,
   Text,
@@ -9,6 +10,9 @@ import {
 } from "react-native";
 
 const ProfileScreen = ({ navigation }) => {
+  useEffect(() => {
+    axios.get("http://localhost:3000/");
+  });
   return (
     <View style={styles.container}>
       <View style={styles.editProfileButton}>
