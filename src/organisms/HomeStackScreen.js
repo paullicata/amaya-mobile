@@ -13,7 +13,11 @@ const HomeStackScreen = () => {
         },
       })}
     >
-      <HomeStack.Screen name="HomeScreen" component={HomeScreen} />
+      <HomeStack.Screen
+        name="HomeScreen"
+        component={HomeScreen}
+        options={{ title: "Home" }}
+      />
     </HomeStack.Navigator>
   );
 };

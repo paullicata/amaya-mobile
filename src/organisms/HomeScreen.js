@@ -36,7 +36,7 @@ const HomeScreen = () => {
   return (
     <View>
       <FlatList
-        styel={styles.flastList}
+        style={styles.flatList}
         data={DATA}
         renderItem={renderItem}
         keyExtractor={(item) => item.id}

@@ -8,8 +8,15 @@ const ProfileStack = createNativeStackNavigator();
 const ProfileStackScreen = (parentProps) => {
   return (
     <ProfileStack.Navigator>
-      <ProfileStack.Screen name="ProfileScreen" component={ProfileScreen} />
-      <ProfileStack.Screen name="EditProfile">
+      <ProfileStack.Screen
+        name="ProfileScreen"
+        component={ProfileScreen}
+        options={{ title: "Profile" }}
+      />
+      <ProfileStack.Screen
+        name="EditProfile"
+        options={{ title: "Edit Profile" }}
+      >
         {(props) => (
           <EditProfileScreen
             {...props}

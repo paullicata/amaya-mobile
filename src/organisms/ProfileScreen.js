@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Text,
@@ -10,9 +10,34 @@ import {
 } from "react-native";
 
 const ProfileScreen = ({ navigation }) => {
+  const [profInfo, setProfInfo] = useState();
+  const [following, setFollowing] = useState();
+  const [followers, setFollowers] = useState();
   useEffect(() => {
-    axios.get("http://localhost:3000/");
-  });
+    Promise.all([getProfileInfo(), getFollowing(), getFollowers()]).then(
+      function (results) {
+        const prof = results[0].data;
+        const following = results[1].data;
+        const followers = results[2].data;
+        setProfInfo(prof);
+        setFollowing(following);
+        setFollowers(followers);
+      }
+    );
+  }, []);
+
+  function getProfileInfo() {
+    return axios.get("http://localhost:3000/users/3");
+  }
+
+  function getFollowers() {
+    return axios.get("http://localhost:3000/users/3/followers");
+  }
+
+  function getFollowing() {
+    return axios.get("http://localhost:3000/users/3/following");
+  }
+
   return (
     <View style={styles.container}>
       <View style={styles.editProfileButton}>
@@ -23,16 +48,23 @@ const ProfileScreen = ({ navigation }) => {
       </View>
       <Image
         source={{
-          uri: "https://t4.ftcdn.net/jpg/00/64/67/63/360_F_64676383_LdbmhiNM6Ypzb3FM4PPuFP9rHe7ri8Ju.jpg",
+          uri: profInfo ? profInfo.image : "",
         }}
         style={styles.image}
       />
-      <Text style={styles.name}>Paul Licata</Text>
+      <Text style={styles.name}>
+        {profInfo ? profInfo.first_name : ""}{" "}
+        {profInfo ? profInfo.last_name : ""}
+      </Text>
 
       <View style={styles.statsGroup}>
         <Text style={styles.stats}>Logs: 15</Text>
-        <Text style={styles.stats}>Followers: 174</Text>
-        <Text style={styles.stats}>Following: 99</Text>
+        <Text style={styles.stats}>
+          Followers: {followers ? followers.length : ""}
+        </Text>
+        <Text style={styles.stats}>
+          Following: {followers ? following.length : ""}
+        </Text>
       </View>
     </View>
   );
