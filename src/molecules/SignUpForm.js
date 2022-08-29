@@ -1,13 +1,17 @@
 import React, { useCallback, useState } from "react";
 import axios from "axios";
 import {
-  Text,
-  TextInput,
-  View,
-  SafeAreaView,
-  StyleSheet,
+  Box,
+  Heading,
+  VStack,
+  FormControl,
+  Input,
   Button,
-} from "react-native";
+  Center,
+  HStack,
+  Text,
+  Link,
+} from "native-base";
 import deviceStorage from "../services/deviceSorage";
 
 const SignUpForm = (props) => {
@@ -22,8 +26,8 @@ const SignUpForm = (props) => {
     axios
       .post("http://localhost:3000/users", {
         user: {
-          email: "hehdde@gmail.com",
-          username: "asdgsdsasf",
+          email: "hehddde@gmail.com",
+          username: "asdgsddsasf",
           password: "asdfasdf",
           password_confirmation: "asdfasdf",
         },
@@ -41,56 +45,84 @@ const SignUpForm = (props) => {
   }, [username, email, password, passwordConfirmation]);
 
   return (
-    <View>
-      <Text style={styles.title}>Sign Up</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Username"
-        onChangeText={onChangeUsername}
-        value={username}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={onChangeEmail}
-        value={email}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={onChangePassword}
-        value={password}
-        secureTextEntry={true}
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password Confirmation"
-        onChangeText={onChangePasswordConfirmation}
-        value={passwordConfirmation}
-        secureTextEntry={true}
-      />
-      <Button title="Register" onPress={sendRegistration} />
-      <Button onPress={props.authSwitch} title="Already have an account?" />
-      <Text style={styles.errors}>{registrationError}</Text>
-    </View>
+    <Center w="100%">
+      <Box safeArea p="2" w="90%" maxW="290" py="8">
+        <Heading
+          size="2xl"
+          color="coolGray.800"
+          _dark={{
+            color: "warmGray.50",
+          }}
+          fontWeight="semibold"
+          alignSelf="center"
+        >
+          Welcome
+        </Heading>
+        <Heading
+          mt="1"
+          color="coolGray.600"
+          _dark={{
+            color: "warmGray.200",
+          }}
+          fontWeight="medium"
+          size="sm"
+          alignSelf="center"
+        >
+          Sign up to continue!
+        </Heading>
+        <VStack space={3} mt="5">
+          <FormControl>
+            <FormControl.Label>Email</FormControl.Label>
+            <Input onChangeText={onChangeEmail} value={email} />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>Username</FormControl.Label>
+            <Input onChangeText={onChangeUsername} value={username} />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>Password</FormControl.Label>
+            <Input
+              type="password"
+              onChangeText={onChangePassword}
+              value={password}
+            />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>Confirm Password</FormControl.Label>
+            <Input
+              type="password"
+              onChangeText={onChangePasswordConfirmation}
+              value={passwordConfirmation}
+            />
+          </FormControl>
+          <Button mt="2" colorScheme="indigo" onPress={sendRegistration}>
+            Sign up
+          </Button>
+          <HStack mt="6" justifyContent="center">
+            <Text
+              fontSize="sm"
+              color="coolGray.600"
+              _dark={{
+                color: "warmGray.200",
+              }}
+            >
+              Already have an account?
+            </Text>
+            <Link
+              _text={{
+                color: "indigo.500",
+                fontWeight: "medium",
+                fontSize: "sm",
+              }}
+              onPress={props.authSwitch}
+            >
+              Sign In
+            </Link>
+          </HStack>
+        </VStack>
+      </Box>
+    </Center>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    textAlign: "center",
-    fontSize: 60,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  errors: {
-    textAlign: "center",
-    color: "red",
-  },
-});
 
 export default SignUpForm;

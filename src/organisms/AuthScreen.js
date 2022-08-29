@@ -23,22 +23,15 @@ function AuthScreen(props) {
     );
   } else {
     return (
-      <View style={styles.container}>
+      <Center flex={1} px="3">
         <SignUpForm
           authSwitch={authSwitch}
           setJwt={props.setJwt}
           setUser={props.setUser}
         />
-      </View>
+      </Center>
     );
   }
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 50,
-  },
-});
 
 export default AuthScreen;
