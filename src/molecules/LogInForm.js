@@ -1,14 +1,19 @@
 import axios from "axios";
-import React, { useCallback, useEffect, useState } from "react";
-import {
-  Text,
-  TextInput,
-  View,
-  SafeAreaView,
-  StyleSheet,
-  Button,
-} from "react-native";
+import React, { useCallback, useState } from "react";
 import deviceStorage from "../services/deviceSorage";
+import {
+  Box,
+  Text,
+  Heading,
+  VStack,
+  FormControl,
+  Input,
+  Link,
+  Button,
+  HStack,
+  Center,
+  NativeBaseProvider,
+} from "native-base";
 
 const LogInForm = (props) => {
   const [email, onChangeEmail] = useState();
@@ -36,44 +41,89 @@ const LogInForm = (props) => {
   }, [email, password]);
 
   return (
-    <View>
-      <Text style={styles.title}>Log In</Text>
-      <TextInput
-        style={styles.input}
-        placeholder="Email"
-        onChangeText={onChangeEmail}
-        value={email}
-        keyboardType="email-address"
-      />
-      <TextInput
-        style={styles.input}
-        placeholder="Password"
-        onChangeText={onChangePassword}
-        value={password}
-        secureTextEntry={true}
-      />
-      <Button onPress={sendLoginInfo} title="Login" />
-      <Button onPress={props.authSwitch} title="Don't have an account?" />
-      <Text style={styles.errors}>{logInError}</Text>
-    </View>
+    <Center w="100%">
+      <Box safeArea p="2" py="8" w="90%" maxW="350">
+        <Heading
+          size="2xl"
+          fontWeight="600"
+          color="coolGray.800"
+          _dark={{
+            color: "warmGray.50",
+          }}
+          alignSelf="center"
+        >
+          Welcome
+        </Heading>
+        <Heading
+          mt="1"
+          _dark={{
+            color: "warmGray.200",
+          }}
+          color="coolGray.600"
+          fontWeight="medium"
+          size="sm"
+          alignSelf="center"
+        >
+          Sign in to continue!
+        </Heading>
+
+        <VStack space={3} mt="5">
+          <FormControl>
+            <FormControl.Label>Email</FormControl.Label>
+            <Input
+              type="email"
+              onChangeText={onChangeEmail}
+              value={email}
+              keyboardType="email-address"
+            />
+          </FormControl>
+          <FormControl>
+            <FormControl.Label>Password</FormControl.Label>
+            <Input
+              type="password"
+              onChangeText={onChangePassword}
+              value={password}
+            />
+            <Link
+              _text={{
+                fontSize: "xs",
+                fontWeight: "500",
+                color: "indigo.500",
+              }}
+              alignSelf="flex-end"
+              mt="1"
+            >
+              Forget Password?
+            </Link>
+          </FormControl>
+          <Button mt="2" colorScheme="indigo" onPress={sendLoginInfo}>
+            Sign in
+          </Button>
+          <HStack mt="6" justifyContent="center">
+            <Text
+              fontSize="sm"
+              color="coolGray.600"
+              _dark={{
+                color: "warmGray.200",
+              }}
+            >
+              I'm a new user.{" "}
+            </Text>
+            <Link
+              _text={{
+                color: "indigo.500",
+                fontWeight: "medium",
+                fontSize: "sm",
+              }}
+              onPress={props.authSwitch}
+            >
+              Sign Up
+            </Link>
+          </HStack>
+        </VStack>
+      </Box>
+    </Center>
   );
 };
-
-const styles = StyleSheet.create({
-  title: {
-    textAlign: "center",
-    fontSize: 60,
-  },
-  input: {
-    height: 40,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-  },
-  errors: {
-    textAlign: "center",
-    color: "red",
-  },
-});
 
 export default LogInForm;

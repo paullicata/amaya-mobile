@@ -18,6 +18,7 @@ import * as SecureStore from "expo-secure-store";
 import { tokenState } from "./src/atoms/tokenState";
 import { userState } from "./src/atoms/userState";
 import SplashScreen from "./src/organisms/SplashScreen";
+import { NativeBaseProvider, Box } from "native-base";
 
 const Tab = createBottomTabNavigator();
 
@@ -97,7 +98,9 @@ function App() {
 const AppRoot = () => {
   return (
     <RecoilRoot>
-      <App />
+      <NativeBaseProvider>
+        <App />
+      </NativeBaseProvider>
     </RecoilRoot>
   );
 };

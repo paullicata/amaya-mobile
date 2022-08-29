@@ -2,6 +2,7 @@ import React, { useCallback, useState } from "react";
 import { Text, View, SafeAreaView, StyleSheet } from "react-native";
 import LogInForm from "../molecules/LogInForm";
 import SignUpForm from "../molecules/SignUpForm";
+import { Center } from "native-base";
 
 function AuthScreen(props) {
   const [showLogin, setShowLogin] = useState(true);
@@ -12,13 +13,13 @@ function AuthScreen(props) {
 
   if (showLogin) {
     return (
-      <View style={styles.container}>
+      <Center flex={1} px="3">
         <LogInForm
           authSwitch={authSwitch}
           setJwt={props.setJwt}
           setUser={props.setUser}
         />
-      </View>
+      </Center>
     );
   } else {
     return (
