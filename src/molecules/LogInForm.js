@@ -43,12 +43,14 @@ const LogInForm = (props) => {
         placeholder="Email"
         onChangeText={onChangeEmail}
         value={email}
+        keyboardType="email-address"
       />
       <TextInput
         style={styles.input}
         placeholder="Password"
         onChangeText={onChangePassword}
         value={password}
+        secureTextEntry={true}
       />
       <Button onPress={sendLoginInfo} title="Login" />
       <Button onPress={props.authSwitch} title="Don't have an account?" />

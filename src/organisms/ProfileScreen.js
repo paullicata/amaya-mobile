@@ -46,12 +46,15 @@ const ProfileScreen = ({ navigation }) => {
           onPress={() => navigation.navigate("EditProfile")}
         />
       </View>
-      <Image
-        source={{
-          uri: profInfo ? profInfo.image : "",
-        }}
-        style={styles.image}
-      />
+      {profInfo ? (
+        <Image
+          source={{
+            uri: profInfo.image,
+          }}
+          style={styles.image}
+        />
+      ) : null}
+
       <Text style={styles.name}>
         {profInfo ? profInfo.first_name : ""}{" "}
         {profInfo ? profInfo.last_name : ""}

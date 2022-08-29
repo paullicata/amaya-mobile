@@ -40,42 +40,46 @@ const SearchScreen = ({ navigation }) => {
           setInput(text);
           setSearchTimer(
             setTimeout(() => {
-              getResults(text);
+              if (text.length > 0) {
+                getResults(text);
+              }
             }, 750)
           );
         }}
       />
-      <FlatList
-        data={results}
-        renderItem={({ item, index }) => (
-          <TouchableOpacity
-            key={item.id.toString()}
-            onPress={() =>
-              navigation.navigate("BookScreen", {
-                bookId: item.id,
-              })
-            }
-          >
-            <View style={styles.item}>
-              <View style={styles.rowContainer}>
-                <Image
-                  source={{
-                    uri: item.cover,
-                  }}
-                  style={styles.coverImage}
-                />
-                <View style={styles.bookInfo}>
-                  <Text style={styles.title}>{item.title}</Text>
-                  <Text style={styles.author}>
-                    By {item.first_name} {item.last_name}
-                  </Text>
+      {input.length > 0 ? (
+        <FlatList
+          data={results}
+          renderItem={({ item, index }) => (
+            <TouchableOpacity
+              key={item.id.toString()}
+              onPress={() =>
+                navigation.navigate("BookScreen", {
+                  bookId: item.id,
+                  title: item.title,
+                  authorName: item.name,
+                })
+              }
+            >
+              <View style={styles.item}>
+                <View style={styles.rowContainer}>
+                  <Image
+                    source={{
+                      uri: item.cover,
+                    }}
+                    style={styles.coverImage}
+                  />
+                  <View style={styles.bookInfo}>
+                    <Text style={styles.title}>{item.title}</Text>
+                    <Text style={styles.author}>By {item.name}</Text>
+                  </View>
                 </View>
               </View>
-            </View>
-          </TouchableOpacity>
-        )}
-        keyExtractor={(item) => item.id.toString()}
-      />
+            </TouchableOpacity>
+          )}
+          keyExtractor={(item) => item.id.toString()}
+        />
+      ) : null}
     </View>
   );
 };
@@ -84,6 +88,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     marginTop: 15,
+    flexShrink: 1,
   },
   item: {
     backgroundColor: "white",

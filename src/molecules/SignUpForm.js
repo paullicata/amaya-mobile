@@ -60,12 +60,14 @@ const SignUpForm = (props) => {
         placeholder="Password"
         onChangeText={onChangePassword}
         value={password}
+        secureTextEntry={true}
       />
       <TextInput
         style={styles.input}
         placeholder="Password Confirmation"
         onChangeText={onChangePasswordConfirmation}
         value={passwordConfirmation}
+        secureTextEntry={true}
       />
       <Button title="Register" onPress={sendRegistration} />
       <Button onPress={props.authSwitch} title="Already have an account?" />
