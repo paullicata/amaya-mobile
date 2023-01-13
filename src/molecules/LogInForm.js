@@ -14,6 +14,7 @@ import {
   Center,
   NativeBaseProvider,
 } from "native-base";
+import DismissKeyboardView from "./DismissKeyboardHOC";
 
 const LogInForm = (props) => {
   const [email, onChangeEmail] = useState();
@@ -42,7 +43,7 @@ const LogInForm = (props) => {
 
   return (
     <Center w="100%">
-      <Box safeArea p="2" py="8" w="90%" maxW="350">
+      <Box safeArea p="2" py="8" w="95%" maxW="350">
         <Heading
           size="2xl"
           fontWeight="600"
@@ -72,6 +73,9 @@ const LogInForm = (props) => {
             <FormControl.Label>Email</FormControl.Label>
             <Input
               type="email"
+              width="100%"
+              py="3"
+              px="2"
               onChangeText={onChangeEmail}
               value={email}
               keyboardType="email-address"
@@ -81,6 +85,9 @@ const LogInForm = (props) => {
             <FormControl.Label>Password</FormControl.Label>
             <Input
               type="password"
+              width="100%"
+              py="3"
+              px="2"
               onChangeText={onChangePassword}
               value={password}
             />
@@ -101,7 +108,7 @@ const LogInForm = (props) => {
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text
-              fontSize="sm"
+              fontSize="md"
               color="coolGray.600"
               _dark={{
                 color: "warmGray.200",
@@ -113,7 +120,7 @@ const LogInForm = (props) => {
               _text={{
                 color: "indigo.500",
                 fontWeight: "medium",
-                fontSize: "sm",
+                fontSize: "md",
               }}
               onPress={props.authSwitch}
             >

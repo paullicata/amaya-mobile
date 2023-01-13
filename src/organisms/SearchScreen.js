@@ -1,15 +1,23 @@
 import axios from "axios";
 import React, { useState } from "react";
 import {
-  StyleSheet,
+  VStack,
+  Input,
+  Icon,
   Text,
-  TextInput,
-  View,
+  Center,
   FlatList,
+  Spacer,
+  HStack,
+  Pressable,
   Image,
-  Button,
-  TouchableOpacity,
-} from "react-native";
+  SearchIcon,
+  Heading,
+  Container,
+  Box,
+} from "native-base";
+import { Ionicons } from "@expo/vector-icons";
+import DismissKeyboardView from "../molecules/DismissKeyboardHOC";
 
 const SearchScreen = ({ navigation }) => {
   const [input, setInput] = useState("");
@@ -28,31 +36,55 @@ const SearchScreen = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.input}
-        placeholder="Search..."
-        value={input}
-        onChangeText={(text) => {
-          if (searchTimer) {
-            clearTimeout(searchTimer);
+    <Center pt="4" flex={1} justifyContent="flex-start">
+      <VStack w="90%" space={5} alignSelf="center">
+        <Input
+          placeholder="Search..."
+          variant="outline"
+          width="100%"
+          borderRadius="10"
+          py="3"
+          px="2"
+          InputLeftElement={
+            <Icon
+              ml="2"
+              size="4"
+              color="gray.400"
+              as={<Ionicons name="ios-search" />}
+            />
           }
-          setInput(text);
-          setSearchTimer(
-            setTimeout(() => {
-              if (text.length > 0) {
-                getResults(text);
-              }
-            }, 750)
-          );
-        }}
-      />
+          // value={input}
+          onChangeText={(text) => {
+            if (searchTimer) {
+              clearTimeout(searchTimer);
+            }
+            setInput(text);
+            setSearchTimer(
+              setTimeout(() => {
+                if (text.length > 0) {
+                  getResults(text);
+                }
+              }, 750)
+            );
+          }}
+        />
+      </VStack>
+
       {input.length > 0 ? (
         <FlatList
+          width="90%"
+          height="100%"
           data={results}
-          renderItem={({ item, index }) => (
-            <TouchableOpacity
+          renderItem={({ item }) => (
+            <Pressable
+              _dark={{
+                borderColor: "muted.50",
+              }}
               key={item.id.toString()}
+              borderColor="muted.800"
+              pl={["0", "4"]}
+              pr={["0", "5"]}
+              py="2"
               onPress={() =>
                 navigation.navigate("BookScreen", {
                   bookId: item.id,
@@ -61,77 +93,49 @@ const SearchScreen = ({ navigation }) => {
                 })
               }
             >
-              <View style={styles.item}>
-                <View style={styles.rowContainer}>
-                  <Image
-                    source={{
-                      uri: item.cover,
+              <HStack space={[2, 3]} justifyContent="space-between">
+                <Image
+                  size="sm"
+                  source={{
+                    uri: item.cover,
+                  }}
+                  alt={item.title}
+                />
+                <VStack>
+                  <Text
+                    _dark={{
+                      color: "warmGray.50",
                     }}
-                    style={styles.coverImage}
-                  />
-                  <View style={styles.bookInfo}>
-                    <Text style={styles.title}>{item.title}</Text>
-                    <Text style={styles.author}>By {item.name}</Text>
-                  </View>
-                </View>
-              </View>
-            </TouchableOpacity>
+                    color="coolGray.800"
+                    bold
+                  >
+                    {item.title}
+                  </Text>
+                  <Text
+                    color="coolGray.600"
+                    _dark={{
+                      color: "warmGray.200",
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </VStack>
+                <Spacer />
+              </HStack>
+            </Pressable>
           )}
           keyExtractor={(item) => item.id.toString()}
         />
-      ) : null}
-    </View>
+      ) : (
+        <Box flex={1} justifyContent="center">
+          <VStack alignItems="center">
+            <SearchIcon size="20" />
+            <Heading size="sm">Search For Books, Authors, or Users</Heading>
+          </VStack>
+        </Box>
+      )}
+    </Center>
   );
 };
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    marginTop: 15,
-    flexShrink: 1,
-  },
-  item: {
-    backgroundColor: "white",
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
-    borderColor: "gray",
-    borderWidth: 1,
-  },
-  input: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-    marginVertical: 8,
-    marginHorizontal: 16,
-  },
-  usernameText: {
-    fontSize: 20,
-    paddingLeft: 10,
-    color: "grey",
-  },
-  rowContainer: {
-    flexDirection: "row",
-    paddingBottom: 10,
-  },
-  bookInfo: {
-    paddingLeft: 15,
-  },
-  title: {
-    fontSize: 28,
-    fontWeight: "500",
-  },
-  author: {
-    fontSize: 32,
-    color: "gray",
-    fontWeight: "300",
-  },
-  coverImage: {
-    width: 75,
-    height: 90,
-    borderColor: "black",
-    borderWidth: 1,
-  },
-});
 
 export default SearchScreen;

@@ -46,7 +46,7 @@ const SignUpForm = (props) => {
 
   return (
     <Center w="100%">
-      <Box safeArea p="2" w="90%" maxW="290" py="8">
+      <Box safeArea p="2" w="95%" maxW="350" py="8">
         <Heading
           size="2xl"
           color="coolGray.800"
@@ -73,16 +73,31 @@ const SignUpForm = (props) => {
         <VStack space={3} mt="5">
           <FormControl>
             <FormControl.Label>Email</FormControl.Label>
-            <Input onChangeText={onChangeEmail} value={email} />
+            <Input
+              width="100%"
+              py="3"
+              px="2"
+              onChangeText={onChangeEmail}
+              value={email}
+            />
           </FormControl>
           <FormControl>
             <FormControl.Label>Username</FormControl.Label>
-            <Input onChangeText={onChangeUsername} value={username} />
+            <Input
+              width="100%"
+              py="3"
+              px="2"
+              onChangeText={onChangeUsername}
+              value={username}
+            />
           </FormControl>
           <FormControl>
             <FormControl.Label>Password</FormControl.Label>
             <Input
               type="password"
+              width="100%"
+              py="3"
+              px="2"
               onChangeText={onChangePassword}
               value={password}
             />
@@ -91,6 +106,9 @@ const SignUpForm = (props) => {
             <FormControl.Label>Confirm Password</FormControl.Label>
             <Input
               type="password"
+              width="100%"
+              py="3"
+              px="2"
               onChangeText={onChangePasswordConfirmation}
               value={passwordConfirmation}
             />
@@ -100,19 +118,19 @@ const SignUpForm = (props) => {
           </Button>
           <HStack mt="6" justifyContent="center">
             <Text
-              fontSize="sm"
+              fontSize="md"
               color="coolGray.600"
               _dark={{
                 color: "warmGray.200",
               }}
             >
-              Already have an account?
+              Already have an account?{" "}
             </Text>
             <Link
               _text={{
                 color: "indigo.500",
                 fontWeight: "medium",
-                fontSize: "sm",
+                fontSize: "md",
               }}
               onPress={props.authSwitch}
             >
