@@ -24,7 +24,7 @@ const LogInForm = (props) => {
   const sendLoginInfo = useCallback(() => {
     setLogInError("");
     axios
-      .post(`http://localhost:3000/users/sign_in`, {
+      .post(`http://10.0.0.212:3000/users/sign_in`, {
         user: {
           email: "plicata18@gmail.com",
           password: "asdfasdf",
@@ -36,7 +36,7 @@ const LogInForm = (props) => {
         props.setJwt(jwt);
       })
       .catch((error) => {
-        console.log(error);
+        console.log(error.response.data);
         setLogInError("Email or password is invalid.");
       });
   }, [email, password]);

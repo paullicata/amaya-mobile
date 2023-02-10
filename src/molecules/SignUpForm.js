@@ -24,7 +24,7 @@ const SignUpForm = (props) => {
   const sendRegistration = useCallback(() => {
     setRegistrationError("");
     axios
-      .post("http://localhost:3000/users", {
+      .post("http://10.0.0.212:3000/users", {
         user: {
           email: "hehddde@gmail.com",
           username: "asdgsddsasf",
